@@ -50,10 +50,11 @@ const NEW_LINKS_SUBSCRIPTION = gql`
     }
   }
 `
+
 const NEW_VOTES_SUBSCRIPTION = gql`
   subscription {
     newVote {
-      node{
+      node {
         id
         link {
           id
@@ -70,14 +71,15 @@ const NEW_VOTES_SUBSCRIPTION = gql`
               id
             }
           }
-          user {
-            id
-          }
+        }
+        user {
+          id
         }
       }
     }
   }
 `
+
 class LinkList extends Component {
 
   render() {
@@ -100,20 +102,23 @@ class LinkList extends Component {
           return (
             <Fragment>
               {linksToRender.map((link, index) => (
-                <Link key={link.id} link={link} index={index} 
-                updateStoreAfterVote={this._updateCacheAfterVote}
+                <Link
+                  key={link.id}
+                  link={link}
+                  index={index + pageIndex}
+                  updateStoreAfterVote={this._updateCacheAfterVote}
                 />
               ))}
-              {isNewPage && (
-                <div className="flex ml4 mv3 gray">
-                  <div className="pointer mr2" onClick={this._previousPage}>
-                    Previous
-                  </div>
-                  <div className="pointer" onClick={() => this._nextPage(data)}>
-                    Next
-                  </div>
+            {isNewPage && (
+              <div className="flex ml4 mv3 gray">
+                <div className="pointer mr2" onClick={this._previousPage}>
+                  Previous
                 </div>
-              )}
+                <div className="pointer" onClick={() => this._nextPage(data)}>
+                  Next
+                </div>
+              </div>
+            )}
             </Fragment>
           )
         }}
